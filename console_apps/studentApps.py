@@ -9,7 +9,7 @@
 # 7. Delete Student
 # 8. Exit
 students = dict()
-print("1. Add Student\n2. View Students\n3. Find highest marks\n4. Calculate average\n5. Exit")
+print("1. Add Student\n2. View Students\n3. Find highest marks\n4. Calculate average\n5. Search Student\n6.Update marks\n7. Delete Student\n8. Exit")
 while(True):
     print("Enter a valid input to operate")
     operation = int(input())
