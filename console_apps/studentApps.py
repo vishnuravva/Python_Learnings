@@ -1,27 +1,13 @@
-# students = {
-#     "Vishnu":98,
-#     "Yash":97,
-#     "Harish":96
-# }
-# marksList = list(students.values())
-# print(type(marksList))    
-# champion = marksList[0]
-# for i in range(1,len(marksList) + 1):
-#     if(marksList[i] > marksList[i-1]):
-#         champion = marksList[i]
-#         print("Highest Marks: " + champion)  
-
-
 # Mini application
-
 # Build a simple student marks manager:
-
 # 1. Add student
 # 2. View students
 # 3. Find highest marks
 # 4. Calculate average
-# 5. Exit
-    
+# 5. Search Student
+# 6. Update Marks
+# 7. Delete Student
+# 8. Exit
 students = dict()
 print("1. Add Student\n2. View Students\n3. Find highest marks\n4. Calculate average\n5. Exit")
 while(True):
@@ -42,7 +28,6 @@ while(True):
                 print("Kindly add students to view.")        
                 
         case 3:
-            # print(max(students.values()))  
             if students:
                 marksList = list(students.values()) 
                 champion = marksList[0]
@@ -60,8 +45,48 @@ while(True):
                     totalMarks += marks
                 print(f"Average Marks: {totalMarks / len(students)}")
             else:
-                print("No Students found. Kindly add students to view Avg score.")        
-
-        case _:
-            print("Invalid Operation. Please choose between 1-5")
+                print("No Students found. Kindly add students to view Avg score.")     
+        case 5:
+            print("Enter a student name to search")
+            searchStudent = input()
+            
+            if students:
+                if searchStudent in students:
+                    print("Student: ", searchStudent)
+                    print("Marks: ", students[searchStudent])
+                else:
+                    print("No results found.")
+            else:
+                print("No Students found. Kindly add students to view Avg score.")     
+        case 6:
+            print("Enter a student name to update marks")
+            searchStudent = input()
+            
+            if students:
+                if searchStudent in students:
+                    print("Enter marks to be updated for the student")
+                    updatedMarks = int(input())
+                    students[searchStudent] = updatedMarks
+                    print(f"Updated marks for {searchStudent} successfully.")
+                else:
+                    print("No student found.")
+            else:
+                print("No Students found. Kindly add students to view Avg score.")     
+        case 7:
+            print("Enter a student name to delete from master")
+            searchStudent = input()
+            if students:
+                if searchStudent in students:
+                    print("Kindly confirm before deletion Yes / No")
+                    confirm = input()
+                    if confirm == "Yes":
+                        del students[searchStudent]
+                        print(f"Deleted Student {searchStudent} successfully.")
+                else:
+                    print("No results found.")
+            else:
+                print("No students found to delete.")         
+        case 8:
             break
+        case _:
+            print("Invalid Operation. Please choose between 1-8")
