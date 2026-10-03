@@ -1,4 +1,4 @@
-print("===== Expense Tracker =====")
+print("===== Finance Tracker =====")
 def createTransaction():
     transaction = dict()
     print("Enter Transaction type:\nI - Income\nE - Expense")
@@ -38,7 +38,7 @@ def createTransaction():
     print("Enter description")
     desc = input()
     transaction["type"] = transactionType
-    transaction["category"] = category
+    transaction["category"] = category.strip()
     transaction["amount"] = amount
     transaction["description"] = desc
     transactions.append(transaction)
