@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+import shutil
 
 parser = argparse.ArgumentParser()
 
@@ -14,6 +15,11 @@ search_parser.add_argument("keyword")
 stats_parser = sub_parsers.add_parser("stats")
 stats_parser.add_argument("path")
 
+organise_parser = sub_parsers.add_parser("organize")
+organise_parser.add_argument("path")
+organise_parser.add_argument("--execute",action="store_true")
+
+
 args = parser.parse_args()
 command = args.command
 # print("Command: ", args.command)
@@ -25,7 +31,22 @@ path = Path(args.path)
 
 # print("Path exists: ", path.exists())
 # print("Path is a dir: ", path.is_dir())
-
+files_categories = {
+    ".pdf":"Documents",
+    ".txt":"Documents",
+    ".xlsx":"Documents",
+    ".xls":"Documents",
+    ".docx":"Documents",
+    ".jpg":"Images",
+    ".jpeg":"Images",
+    ".png":"Images",
+    
+    ".mp4":"Videos",
+    ".mkv":"Videos",
+    
+    ".mp3":"Audio",
+    "wa":"Audio"
+}
 def view_files_folders(files_folders):
     totalFiles = 0
     totalFolders = 0
@@ -86,7 +107,24 @@ def search_files_folders(files_folders,search):
             print("Search Results: ",total_matches)
     else:
         print("No files/folders available for search.")
-      
+
+def organize(files_folders):
+    if files_folders:
+        for item in files_folders:
+            if item.is_file():
+                category = files_categories.get(item.suffix.lower())
+                if category is not None:
+                    print(item.name," -> ",category)
+                    organized_path = path /  category
+                    organized_path.mkdir(exist_ok=True)
+                    shutil.move(item, organized_path)
+                else:
+                    print(item.name,"Unknonn File type")
+            else:
+                continue   
+    else:
+        print("No files / folders to organise.")       
+        
 print("----------------- File Manager -----------------")
 
 if(path.exists() and path.is_dir()):
@@ -98,6 +136,9 @@ if(path.exists() and path.is_dir()):
             search_files_folders(files_folders,args.keyword)
         case "stats":
             file_stats(files_folders)
+        case "organize":
+            organize(files_folders)
+            
     # totalFiles = 0
     # totalDirectories = 0
     # for item in path.iterdir():
